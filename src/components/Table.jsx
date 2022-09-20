@@ -1,25 +1,32 @@
 import React from 'react';
 import usePlanets from '../hooks/usePlanets';
+import './Table.css';
 
 const Table = () => {
   const [planetList, headerTable] = usePlanets();
-  console.log(planetList);
+  const noFilms = headerTable.filter((headerKey) => headerKey !== 'films');
   return (
     <div>
       <table>
         <thead>
           <tr>
-            { headerTable.map((headerItem, index) => (
+            { noFilms.map((headerItem, index) => (
               <th key={ index }>{headerItem}</th>
             )) }
+            <th>films</th>
           </tr>
         </thead>
         <tbody>
           { planetList.map((planet, index) => (
             <tr key={ index }>
-              { headerTable.map((key, i) => (
+              { noFilms.map((key, i) => (
                 <td key={ i }>{ planet[key] }</td>
               ))}
+              <td>
+                { planet.films.map((film) => (
+                  <li key={ index }>{film}</li>
+                ))}
+              </td>
             </tr>
           ))}
         </tbody>
