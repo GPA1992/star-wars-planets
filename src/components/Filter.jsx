@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../context/context';
 
 const Filter = () => {
-  const arroz = 'arroz';
+  const { setFilter } = useContext(Context);
+
+  const handleChange = ({ target }) => {
+    const { value } = target;
+    setFilter(value.toLowerCase());
+  };
+
   return (
     <div>
-      <p>{ arroz }</p>
       <form action="">
-        <input type="text" />
+        <input
+          type="text"
+          onChange={ handleChange }
+          data-testid="name-filter"
+        />
       </form>
     </div>
   );

@@ -1,9 +1,16 @@
-import React from 'react';
-import usePlanets from '../hooks/usePlanets';
+import React, { useContext, useEffect } from 'react';
+import { Context } from '../context/context';
 import './Table.css';
 
 const Table = () => {
-  const [planetList, headerTable] = usePlanets();
+  const { planetList, headerTable, fetchPlanetList, filter } = useContext(Context);
+
+  useEffect(() => {
+    fetchPlanetList();
+  }, [filter]);
+
+  const newPlanetlist = planetList.filter((planet) => planet
+    .name.toLowerCase().includes(filter));
   const noFilms = headerTable.filter((headerKey) => headerKey !== 'films');
   return (
     <div>
@@ -17,14 +24,14 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          { planetList.map((planet, index) => (
+          { newPlanetlist.map((planet, index) => (
             <tr key={ index }>
               { noFilms.map((key, i) => (
                 <td key={ i }>{ planet[key] }</td>
               ))}
               <td>
                 { planet.films.map((film) => (
-                  <li key={ index }>{film}</li>
+                  <li key={ film }>{film}</li>
                 ))}
               </td>
             </tr>
