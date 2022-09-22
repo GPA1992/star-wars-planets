@@ -3,14 +3,14 @@ import { Context } from '../context/context';
 import './Table.css';
 
 const Table = () => {
-  const { planetList, headerTable, fetchPlanetList, filter } = useContext(Context);
+  const { planetList, headerTable, fetchPlanetList,
+    valueFilter, filteredPlanetList } = useContext(Context);
 
   useEffect(() => {
     fetchPlanetList();
-  }, [filter]);
+  }, [valueFilter]);
 
-  const newPlanetlist = planetList.filter((planet) => planet
-    .name.toLowerCase().includes(filter));
+  const planets = filteredPlanetList.length > 0 ? filteredPlanetList : planetList;
   const noFilms = headerTable.filter((headerKey) => headerKey !== 'films');
   return (
     <div>
@@ -24,7 +24,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          { newPlanetlist.map((planet, index) => (
+          { planets.map((planet, index) => (
             <tr key={ index }>
               { noFilms.map((key, i) => (
                 <td key={ i }>{ planet[key] }</td>

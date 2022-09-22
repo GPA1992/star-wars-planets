@@ -6,7 +6,11 @@ const Context = createContext();
 const Provider = ({ children }) => {
   const [planetList, setPlanetList] = useState([]);
   const [headerTable, setHeaderTable] = useState([]);
-  const [filter, setFilter] = useState('');
+  const [filterList, setFilterList] = useState([]);
+  const [columnFilter, setColumnFilter] = useState('population');
+  const [comparisonFilter, setComparisonFilter] = useState('maior que');
+  const [valueFilter, setValueFilter] = useState('0');
+  const [filteredPlanetList, setFilteredPlanetList] = useState(planetList);
 
   const fetchPlanetList = async () => {
     const { results } = await fetch('https://swapi.dev/api/planets').then((response) => response.json());
@@ -20,8 +24,16 @@ const Provider = ({ children }) => {
     planetList,
     headerTable,
     fetchPlanetList,
-    filter,
-    setFilter,
+    filterList,
+    setFilterList,
+    columnFilter,
+    setColumnFilter,
+    comparisonFilter,
+    setComparisonFilter,
+    valueFilter,
+    setValueFilter,
+    filteredPlanetList,
+    setFilteredPlanetList,
   };
 
   return (
@@ -32,7 +44,7 @@ const Provider = ({ children }) => {
 };
 
 Provider.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export { Context, Provider };
