@@ -1,5 +1,6 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { COLUMN_ITEM, COMPARISON_ITEM } from '../Data/Index';
 
 const Context = createContext();
 
@@ -7,8 +8,9 @@ const Provider = ({ children }) => {
   const [planetList, setPlanetList] = useState([]);
   const [headerTable, setHeaderTable] = useState([]);
   const [filterList, setFilterList] = useState([]);
-  const [columnFilter, setColumnFilter] = useState('population');
-  const [comparisonFilter, setComparisonFilter] = useState('maior que');
+  const [columnItem, setColumnItem] = useState(COLUMN_ITEM);
+  const [columnFilter, setColumnFilter] = useState(columnItem[0]);
+  const [comparisonFilter, setComparisonFilter] = useState(COMPARISON_ITEM[0]);
   const [valueFilter, setValueFilter] = useState('0');
   const [filteredPlanetList, setFilteredPlanetList] = useState(planetList);
 
@@ -34,6 +36,8 @@ const Provider = ({ children }) => {
     setValueFilter,
     filteredPlanetList,
     setFilteredPlanetList,
+    columnItem,
+    setColumnItem,
   };
 
   return (

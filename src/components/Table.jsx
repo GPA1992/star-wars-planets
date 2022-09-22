@@ -4,11 +4,11 @@ import './Table.css';
 
 const Table = () => {
   const { planetList, headerTable, fetchPlanetList,
-    valueFilter, filteredPlanetList } = useContext(Context);
+    valueFilter, filteredPlanetList, columnItem, filterList } = useContext(Context);
 
   useEffect(() => {
     fetchPlanetList();
-  }, [valueFilter]);
+  }, [valueFilter, columnItem, filteredPlanetList, filterList]);
 
   const planets = filteredPlanetList.length > 0 ? filteredPlanetList : planetList;
   const noFilms = headerTable.filter((headerKey) => headerKey !== 'films');

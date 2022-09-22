@@ -5,13 +5,29 @@ import { COLUMN_ITEM, COMPARISON_ITEM } from '../Data/Index';
 const Filter = () => {
   const { setColumnFilter, planetList, comparisonFilter, valueFilter, columnFilter,
     setComparisonFilter, setValueFilter, setFilteredPlanetList, setFilterList,
-    filterList, filteredPlanetList } = useContext(Context);
+    filterList, filteredPlanetList, columnItem,
+    setColumnItem } = useContext(Context);
 
   const handleChange = ({ target }) => {
     const { value } = target;
     const filtro = planetList.filter((planet) => planet.name
       .toLowerCase().includes(value));
     setFilteredPlanetList(filtro);
+  };
+
+  const addNewFilter = () => {
+    const obj = {
+      columnFilter,
+      comparisonFilter,
+      valueFilter,
+    };
+    setFilterList((previousState) => (previousState.concat(obj)));
+  };
+
+  const attColumnItem = () => {
+    const newColumnItem = columnItem.filter((item) => item !== columnFilter);
+    setColumnItem(newColumnItem);
+    setColumnFilter(newColumnItem[0]);
   };
 
   const handleClick = () => {
@@ -36,15 +52,59 @@ const Filter = () => {
     default:
       setFilteredPlanetList([]);
     }
-    const obj = {
-      columnFilter,
-      comparisonFilter,
-      valueFilter,
-    };
-
-    setFilterList((previousState) => (previousState.concat(obj)));
-    console.log(filterList);
+    addNewFilter();
+    attColumnItem();
   };
+
+  const attFilter = (newList) => {
+    let reFiltered = [...planetList];
+    newList.forEach((filter) => {
+      switch (filter.comparisonFilter) {
+      case 'maior que': {
+        reFiltered = reFiltered
+          .filter((planet) => Number(planet[filter.columnFilter]) > Number(filter
+            .valueFilter));
+        break;
+      }
+      case 'menor que': {
+        reFiltered = reFiltered
+          .filter((planet) => Number(planet[filter.columnFilter]) < Number(filter
+            .valueFilter));
+        break;
+      }
+      case 'igual a': {
+        reFiltered = reFiltered
+          .filter((planet) => Number(planet[filter.columnFilter]) === Number(filter
+            .valueFilter));
+        break;
+      }
+      default:
+        console.log('deu ruim');
+      }
+    });
+    setFilteredPlanetList(reFiltered);
+  };
+
+  const deleteFilter = ({ target }) => {
+    const { name } = target;
+    const newColumnItem = [...columnItem];
+    if (name === 'population') {
+      newColumnItem.unshift(name);
+      setColumnItem(newColumnItem);
+    } else {
+      setColumnItem(columnItem.concat(name));
+    }
+    const newFilterList = filterList.filter((filter) => filter.columnFilter !== name);
+    setFilterList(newFilterList);
+    attFilter(newFilterList);
+  };
+
+  const deleteAllFilter = () => {
+    setColumnItem(COLUMN_ITEM);
+    setFilterList([]);
+    setFilteredPlanetList(planetList);
+  };
+
   return (
     <div>
       <input
@@ -62,7 +122,7 @@ const Filter = () => {
             id="column-filter"
           >
             {
-              COLUMN_ITEM.map((item, index) => (
+              columnItem.map((item, index) => (
                 <option key={ index } value={ item }>{ item }</option>
               ))
             }
@@ -102,12 +162,32 @@ const Filter = () => {
         Filtrar
       </button>
       {filterList.map((filter, index) => (
-        <div key={ index }>
+        <div
+          data-testid="filter"
+          key={ index }
+          name={ filter.columnFilter }
+        >
           <span>{filter.columnFilter}</span>
           <span>{filter.comparisonFilter}</span>
           <span>{filter.valueFilter}</span>
+          <button
+            name={ filter.columnFilter }
+            onClick={ deleteFilter }
+            type="button"
+          >
+            x
+          </button>
         </div>
       ))}
+      <br />
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ deleteAllFilter }
+      >
+        Remover todas filtragens
+      </button>
+      <button onClick={ attFilter } type="button">é o testes</button>
     </div>
   );
 };
