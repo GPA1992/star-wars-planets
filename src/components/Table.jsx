@@ -4,20 +4,23 @@ import './Table.css';
 
 const Table = () => {
   const { planetList, headerTable, fetchPlanetList,
-    valueFilter, filteredPlanetList, columnItem, filterList } = useContext(Context);
+    valueFilter, filteredPlanetList, columnItem, filterList,
+    sortOrder } = useContext(Context);
 
   useEffect(() => {
     fetchPlanetList();
-  }, [valueFilter, columnItem, filteredPlanetList, filterList]);
+  }, [valueFilter, columnItem, filteredPlanetList, filterList, sortOrder]);
 
   const planets = filteredPlanetList.length > 0 ? filteredPlanetList : planetList;
-  const noFilms = headerTable.filter((headerKey) => headerKey !== 'films');
+  const headerFiltered = headerTable.filter((headerKey) => (
+    headerKey !== 'films' && headerKey !== 'name'));
   return (
     <div>
       <table>
         <thead>
           <tr>
-            { noFilms.map((headerItem, index) => (
+            <th>name</th>
+            { headerFiltered.map((headerItem, index) => (
               <th key={ index }>{headerItem}</th>
             )) }
             <th>films</th>
@@ -26,7 +29,8 @@ const Table = () => {
         <tbody>
           { planets.map((planet, index) => (
             <tr key={ index }>
-              { noFilms.map((key, i) => (
+              <td data-testid="planet-name">{planet.name}</td>
+              { headerFiltered.map((key, i) => (
                 <td key={ i }>{ planet[key] }</td>
               ))}
               <td>

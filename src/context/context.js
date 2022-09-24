@@ -12,7 +12,8 @@ const Provider = ({ children }) => {
   const [columnFilter, setColumnFilter] = useState(columnItem[0]);
   const [comparisonFilter, setComparisonFilter] = useState(COMPARISON_ITEM[0]);
   const [valueFilter, setValueFilter] = useState('0');
-  const [filteredPlanetList, setFilteredPlanetList] = useState(planetList);
+  const [filteredPlanetList, setFilteredPlanetList] = useState([]);
+  const [sortOrder, setSortOrder] = useState({ column: 'population', sort: 'ASC' });
 
   const fetchPlanetList = async () => {
     const { results } = await fetch('https://swapi.dev/api/planets').then((response) => response.json());
@@ -38,6 +39,8 @@ const Provider = ({ children }) => {
     setFilteredPlanetList,
     columnItem,
     setColumnItem,
+    sortOrder,
+    setSortOrder,
   };
 
   return (

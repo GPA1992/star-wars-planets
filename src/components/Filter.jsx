@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Context } from '../context/context';
 import { COLUMN_ITEM, COMPARISON_ITEM } from '../Data/Index';
+import Sort from './Sort';
 
 const Filter = () => {
   const { setColumnFilter, planetList, comparisonFilter, valueFilter, columnFilter,
@@ -10,9 +11,9 @@ const Filter = () => {
 
   const handleChange = ({ target }) => {
     const { value } = target;
-    const filtro = planetList.filter((planet) => planet.name
+    const filter = planetList.filter((planet) => planet.name
       .toLowerCase().includes(value));
-    setFilteredPlanetList(filtro);
+    setFilteredPlanetList(filter);
   };
 
   const addNewFilter = () => {
@@ -187,7 +188,9 @@ const Filter = () => {
       >
         Remover todas filtragens
       </button>
-      <button onClick={ attFilter } type="button">é o testes</button>
+      <hr />
+      <br />
+      <Sort />
     </div>
   );
 };
