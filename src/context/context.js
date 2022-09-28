@@ -15,18 +15,11 @@ const Provider = ({ children }) => {
   const [filteredPlanetList, setFilteredPlanetList] = useState([]);
   const [sortOrder, setSortOrder] = useState({ column: 'population', sort: 'ASC' });
 
-  const fetchPlanetList = async () => {
-    const { results } = await fetch('https://swapi.dev/api/planets').then((response) => response.json());
-    results.forEach((planet) => delete planet.residents);
-    setPlanetList(results);
-    const header = Object.keys(results[0]);
-    setHeaderTable(header);
-  };
-
   const context = {
+    setPlanetList,
+    setHeaderTable,
     planetList,
     headerTable,
-    fetchPlanetList,
     filterList,
     setFilterList,
     columnFilter,

@@ -49,22 +49,35 @@ const Sort = () => {
             ))
           }
         </select>
-        <input
-          onChange={ handleChange }
-          data-testid="column-sort-input-asc"
-          name="sort"
-          type="radio"
-          value="ASC"
-        />
-        Ascendente
-        <input
-          onChange={ handleChange }
-          data-testid="column-sort-input-desc"
-          name="sort"
-          type="radio"
-          value="DESC"
-        />
-        Descendente
+        <div>
+          <label htmlFor="ASC">
+            Ascendente
+            <input
+              onChange={ handleChange }
+              data-testid="column-sort-input-asc"
+              name="sort"
+              type="radio"
+              value="ASC"
+              id="ASC"
+            />
+          </label>
+        </div>
+        <div>
+          <label htmlFor="DESC">
+            Descendente
+            <input
+              onChange={ handleChange }
+              data-testid="column-sort-input-desc"
+              name="sort"
+              type="radio"
+              id="DESC"
+              value="DESC"
+            />
+          </label>
+        </div>
+        <div>
+          <br />
+        </div>
       </div>
       <button
         data-testid="column-sort-button"

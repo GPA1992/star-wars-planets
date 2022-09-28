@@ -12,7 +12,7 @@ const Filter = () => {
   const handleChange = ({ target }) => {
     const { value } = target;
     const filter = planetList.filter((planet) => planet.name
-      .toLowerCase().includes(value));
+      .toLowerCase().includes(value.toLowerCase()));
     setFilteredPlanetList(filter);
   };
 
@@ -108,11 +108,15 @@ const Filter = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        onChange={ handleChange }
-        data-testid="name-filter"
-      />
+      <label htmlFor="filter-name">
+        Filtrar pelo nome
+        <input
+          name="filter-name"
+          type="text"
+          onChange={ handleChange }
+          data-testid="name-filter"
+        />
+      </label>
       <div>
         <label htmlFor="column-filter">
           coluna
