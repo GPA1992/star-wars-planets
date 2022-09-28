@@ -145,7 +145,14 @@ const Filter = () => {
           >
             {
               COMPARISON_ITEM.map((item, index) => (
-                <option key={ index } value={ item }>{ item }</option>
+                <option
+                  data-testid="column-opt"
+                  key={ index }
+                  value={ item }
+                >
+                  { item }
+
+                </option>
               ))
             }
           </select>
@@ -175,6 +182,7 @@ const Filter = () => {
           <span>{filter.columnFilter}</span>
           <span>{filter.comparisonFilter}</span>
           <span>{filter.valueFilter}</span>
+
           <button
             name={ filter.columnFilter }
             onClick={ deleteFilter }
