@@ -136,12 +136,12 @@ const Filter = () => {
       </div>
       <div>
         <label htmlFor="comparison-filter">
-          Comparison
+          comparison
           <select
-            name="comparison-filter"
-            id="comparison-filter"
-            data-testid="comparison-filter"
             onChange={ ({ target }) => setComparisonFilter(target.value) }
+            data-testid="comparison-filter"
+            name="column-filter"
+            id="comparison-filter"
           >
             {
               COMPARISON_ITEM.map((item, index) => (

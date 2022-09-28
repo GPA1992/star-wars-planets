@@ -36,7 +36,7 @@ const Table = () => {
         </thead>
         <tbody>
           { planets.map((planet, index) => (
-            <tr data-testid="planet-info" key={ index }>
+            <tr key={ index }>
               <td data-testid="planet-name">{planet.name}</td>
               { headerFiltered.map((key, i) => (
                 <td key={ i }>{ planet[key] }</td>
