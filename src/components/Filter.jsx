@@ -17,14 +17,14 @@ const Filter = () => {
   };
 
   const addNewFilter = () => {
-    const valueFilterNumber = Number(valueFilter);
     const obj = {
       columnFilter,
       comparisonFilter,
-      valueFilter: valueFilterNumber,
+      valueFilter: Number(valueFilter),
     };
-    setFilterList((previousState) => ([...previousState, obj]));
+    setFilterList((previousState) => (previousState.concat(obj)));
   };
+  console.log(filterList);
 
   const attColumnItem = () => {
     const newColumnItem = columnItem.filter((item) => item !== columnFilter);
@@ -172,29 +172,22 @@ const Filter = () => {
         Filtrar
       </button>
       {filterList.map((filter, index) => (
-        <table
+        <div
           data-testid="filter"
           key={ index }
           name={ filter.columnFilter }
         >
-          <tbody>
-
-            <tr>
-              <td name={ filter.columnFilter }>{filter.columnFilter}</td>
-              <td name={ filter.comparisonFilter }>{filter.comparisonFilter}</td>
-              <td name={ filter.valueFilter }>{filter.valueFilter}</td>
-              <td>
-                <button
-                  name={ filter.columnFilter }
-                  onClick={ deleteFilter }
-                  type="button"
-                >
-                  x
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <p name={ filter.columnFilter }>{filter.columnFilter}</p>
+          <p name={ filter.comparisonFilter }>{filter.comparisonFilter}</p>
+          <p name={ filter.valueFilter }>{filter.valueFilter}</p>
+          <button
+            name={ filter.columnFilter }
+            onClick={ deleteFilter }
+            type="button"
+          >
+            x
+          </button>
+        </div>
       ))}
       <br />
       <button

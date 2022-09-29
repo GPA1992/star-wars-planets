@@ -11,7 +11,7 @@ const Provider = ({ children }) => {
   const [columnItem, setColumnItem] = useState(COLUMN_ITEM);
   const [columnFilter, setColumnFilter] = useState(columnItem[0]);
   const [comparisonFilter, setComparisonFilter] = useState(COMPARISON_ITEM[0]);
-  const [valueFilter, setValueFilter] = useState('0');
+  const [valueFilter, setValueFilter] = useState(0);
   const [filteredPlanetList, setFilteredPlanetList] = useState([]);
   const [sortOrder, setSortOrder] = useState({ column: 'population', sort: 'ASC' });
 
