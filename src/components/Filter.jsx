@@ -17,12 +17,13 @@ const Filter = () => {
   };
 
   const addNewFilter = () => {
+    const valueFilterNumber = Number(valueFilter);
     const obj = {
       columnFilter,
       comparisonFilter,
-      valueFilter,
+      valueFilter: valueFilterNumber,
     };
-    setFilterList((previousState) => (previousState.concat(obj)));
+    setFilterList((previousState) => ([...previousState, obj]));
   };
 
   const attColumnItem = () => {
@@ -45,13 +46,10 @@ const Filter = () => {
         .filter((planet) => Number(planet[columnFilter]) < Number(valueFilter)));
       break;
     }
-    case 'igual a': {
+    default:
       setFilteredPlanetList(ifFilteredPlanetList
         .filter((planet) => Number(planet[columnFilter]) === Number(valueFilter)));
       break;
-    }
-    default:
-      setFilteredPlanetList([]);
     }
     addNewFilter();
     attColumnItem();
@@ -80,7 +78,7 @@ const Filter = () => {
         break;
       }
       default:
-        console.log('deu ruim');
+        break;
       }
     });
     setFilteredPlanetList(reFiltered);
@@ -174,23 +172,29 @@ const Filter = () => {
         Filtrar
       </button>
       {filterList.map((filter, index) => (
-        <div
+        <table
           data-testid="filter"
           key={ index }
           name={ filter.columnFilter }
         >
-          <span>{filter.columnFilter}</span>
-          <span>{filter.comparisonFilter}</span>
-          <span>{filter.valueFilter}</span>
+          <tbody>
 
-          <button
-            name={ filter.columnFilter }
-            onClick={ deleteFilter }
-            type="button"
-          >
-            x
-          </button>
-        </div>
+            <tr>
+              <td name={ filter.columnFilter }>{filter.columnFilter}</td>
+              <td name={ filter.comparisonFilter }>{filter.comparisonFilter}</td>
+              <td name={ filter.valueFilter }>{filter.valueFilter}</td>
+              <td>
+                <button
+                  name={ filter.columnFilter }
+                  onClick={ deleteFilter }
+                  type="button"
+                >
+                  x
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       ))}
       <br />
       <button

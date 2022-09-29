@@ -10,8 +10,7 @@ const Sort = () => {
   }, [sortOrder]);
 
   const handleChange = ({ target }) => {
-    const { name } = target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const { name, value } = target;
     setSortOrder((previousValue) => ({
       ...previousValue,
       [name]: value,

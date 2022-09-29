@@ -1,33 +1,45 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from '../App';
+import planetListMock from '../Helpers/MockData'
+import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 
 describe('Testa os itens que fazem a ordenação da tabela', () => {
-  it(`Testa se existe um campo para escolher para qual item da
-       coluna sera feita a ordenação`, () => {
-    render(<App />)
-    const columnOrdenationInput = screen.getByTestId('column-sort');
-    expect(columnOrdenationInput).toBeInTheDocument();
+  beforeEach(() => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(planetListMock),
+    }));
   })
-  it('Testa se existe uma opção de checkbox radio, com o label Ascendente', () => {
+  it('testa se os campos para fazer a ordenação existem', () => {
     render(<App />)
-    const ascRadio = screen.getByRole('radio', {
-      name: /ascendente/i
-    })
-    expect(ascRadio).toBeInTheDocument();
+    expect(screen.getByTestId('column-sort')).toBeInTheDocument()
+    expect(screen.getByRole('radio', { name: /ascendente/i })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: /descendente/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /ordenar/i })).toBeInTheDocument();
   })
-  it('Testa se existe uma opção de checkbox radio, com o label Descendente', () => {
+  it('Testa se ao escolher uma coluna population e ordernar em ordem ascendente, é aplicado o filtro corretamente', async () => {
     render(<App />)
-    const descRadio = screen.getByRole('radio', {
-      name: /descendente/i
+    act(() => {
+      waitFor(() => {
+        userEvent.selectOptions(screen.getByTestId('column-sort'), 'population')
+        userEvent.click(screen.getByTestId('column-sort-input-asc'))
+        userEvent.click(screen.getByTestId('column-sort-button'))
+        const planetTable = screen.getAllByTestId('planet-name')
+        expect(planetTable[0]).toHaveFormValue('Yavin IV')
+      })
     })
-    expect(descRadio).toBeInTheDocument();
   })
-  it('Testa se existe um botão para ordenar a tabela baseado nas regras de ordenação', () => {
+  it('Testa se ao escolher uma coluna population e ordernar em ordem descendente, é aplicado o filtro corretamente', async () => {
     render(<App />)
-    const orderButton = screen.getByRole('button', {
-      name: /ordenar/i
+    act(() => {
+      waitFor(() => {
+        userEvent.selectOptions(screen.getByTestId('column-sort'), 'population')
+        userEvent.click(screen.getByTestId('column-sort-input-desc'))
+        userEvent.click(screen.getByTestId('column-sort-button'))
+        const planetTable = screen.getAllByTestId('planet-name')
+        expect(planetTable[0]).toHaveFormValue('Coruscant')
+      })
     })
-    expect(orderButton).toBeInTheDocument();
   })
 })
