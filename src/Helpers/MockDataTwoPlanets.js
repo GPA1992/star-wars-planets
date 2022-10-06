@@ -1,8 +1,26 @@
-const mockData = {
+const mockDataTwoPlanets = {
   count: 60,
   next: 'https://swapi-trybe.herokuapp.com/api/planets/?page=2',
   previous: null,
   results: [
+    {
+      name: 'Hoth',
+      rotation_period: '23',
+      orbital_period: '549',
+      diameter: '7200',
+      climate: 'frozen',
+      gravity: '1.1 standard',
+      terrain: 'tundra, ice caves, mountain ranges',
+      surface_water: '100',
+      population: 'unknown',
+      residents: [],
+      films: [
+        'https://swapi-trybe.herokuapp.com/api/films/2/',
+      ],
+      created: '2014-12-10T11:39:13.934000Z',
+      edited: '2014-12-20T20:58:18.423000Z',
+      url: 'https://swapi-trybe.herokuapp.com/api/planets/4/',
+    },
     {
       name: 'Endor',
       rotation_period: '18',
@@ -26,4 +44,4 @@ const mockData = {
   ],
 };
 
-export default mockData;
+export default mockDataTwoPlanets;

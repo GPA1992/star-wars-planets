@@ -24,7 +24,6 @@ const Filter = () => {
     };
     setFilterList((previousState) => (previousState.concat(obj)));
   };
-  console.log(filterList);
 
   const attColumnItem = () => {
     const newColumnItem = columnItem.filter((item) => item !== columnFilter);
@@ -60,18 +59,21 @@ const Filter = () => {
     newList.forEach((filter) => {
       switch (filter.comparisonFilter) {
       case 'maior que': {
+        console.log('maior que chamado');
         reFiltered = reFiltered
           .filter((planet) => Number(planet[filter.columnFilter]) > Number(filter
             .valueFilter));
         break;
       }
       case 'menor que': {
+        console.log('menor que chamado');
         reFiltered = reFiltered
           .filter((planet) => Number(planet[filter.columnFilter]) < Number(filter
             .valueFilter));
         break;
       }
       case 'igual a': {
+        console.log('igual a chamado');
         reFiltered = reFiltered
           .filter((planet) => Number(planet[filter.columnFilter]) === Number(filter
             .valueFilter));
@@ -173,15 +175,15 @@ const Filter = () => {
       </button>
       {filterList.map((filter, index) => (
         <div
-          data-testid="filter"
+          data-testid="filtered"
           key={ index }
-          name={ filter.columnFilter }
         >
           <p name={ filter.columnFilter }>{filter.columnFilter}</p>
           <p name={ filter.comparisonFilter }>{filter.comparisonFilter}</p>
           <p name={ filter.valueFilter }>{filter.valueFilter}</p>
           <button
             name={ filter.columnFilter }
+            data-testid={ `delete-filter-${filter.columnFilter}` }
             onClick={ deleteFilter }
             type="button"
           >

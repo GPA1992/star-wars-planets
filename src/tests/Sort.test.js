@@ -1,14 +1,14 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import App from '../App';
-import planetListMock from '../Helpers/MockData'
+import testData from '../../cypress/mocks/testData';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 
 describe('Testa os itens que fazem a ordenação da tabela', () => {
   beforeEach(() => {
     global.fetch = jest.fn(() => Promise.resolve({
-      json: () => Promise.resolve(planetListMock),
+      json: () => Promise.resolve(testData),
     }));
   })
   it('testa se os campos para fazer a ordenação existem', () => {

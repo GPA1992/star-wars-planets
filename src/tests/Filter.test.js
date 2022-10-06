@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from '../App';
-import { toBeInTheDocument } from '@testing-library/jest-dom/dist/matchers';
+import userEvent from '@testing-library/user-event';
+
 
 describe('Testa os items que fazem a filtragem da tabela', () => {
   it('1 - Testa se existe um campo para digitar o nome de uma planeta', () => {
@@ -29,5 +30,6 @@ describe('Testa os items que fazem a filtragem da tabela', () => {
   it('6 - Testa se existe um botão para remover todos os filtros', () => {
       render(<App />)
       expect(screen.getByRole('button', { name: /remover todas filtragens/i })).toBeInTheDocument()
+      userEvent.click(screen.getByRole('button', { name: /remover todas filtragens/i }));
   })
 });
