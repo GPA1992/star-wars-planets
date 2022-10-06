@@ -44,11 +44,11 @@ describe('Testa os filtros e o funcionamento geral da página', () => {
     userEvent.type(screen.getByTestId('value-filter'), '7201')
     userEvent.click(screen.getByTestId('button-filter'))
     expect(screen.getAllByTestId('planet-name')).toHaveLength(2)
-    expect(screen.getByTestId('filtered')).toBeInTheDocument();
+    expect(screen.getByTestId('filter')).toBeInTheDocument();
 
 
     userEvent.click(screen.getByTestId('delete-filter-diameter'));
-    expect(screen.queryByTestId('filtered')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('filter')).not.toBeInTheDocument();
     expect(screen.getAllByTestId('planet-name')).toHaveLength(10)
 
   })
@@ -65,11 +65,11 @@ describe('Testa os filtros e o funcionamento geral da página', () => {
     userEvent.type(screen.getByTestId('value-filter'), '50000')
     userEvent.click(screen.getByTestId('button-filter'))
     expect(screen.getAllByTestId('planet-name')).toHaveLength(1)
-    expect(screen.getByTestId('filtered')).toBeInTheDocument();
+    expect(screen.getByTestId('filter')).toBeInTheDocument();
 
 
     userEvent.click(screen.getByTestId('delete-filter-diameter'));
-    expect(screen.queryByTestId('filtered')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('filter')).not.toBeInTheDocument();
     expect(screen.getAllByTestId('planet-name')).toHaveLength(10)
   })
   it('Testa o funcionamento do filtro após o preenchimento do input, usando o comparison igual a', async () => {
@@ -85,14 +85,14 @@ describe('Testa os filtros e o funcionamento geral da página', () => {
     userEvent.type(screen.getByTestId('value-filter'), '200000')
     userEvent.click(screen.getByTestId('button-filter'))
     expect(screen.getAllByTestId('planet-name')).toHaveLength(1)
-    expect(screen.getByTestId('filtered')).toBeInTheDocument();
+    expect(screen.getByTestId('filter')).toBeInTheDocument();
 
 
     userEvent.click(screen.getByTestId('delete-filter-population'));
-    expect(screen.queryByTestId('filtered')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('filter')).not.toBeInTheDocument();
     expect(screen.getAllByTestId('planet-name')).toHaveLength(10)
   })
-  it('Testa o botão de deletar um filtro igual a', async () => {
+  it('Testa o botão de deletar um filtro', async () => {
     global.fetch = jest.fn().mockResolvedValue({
       json: jest.fn()
       .mockResolvedValue(mockDataTwoPlanets)

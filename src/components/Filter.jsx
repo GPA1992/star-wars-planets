@@ -59,27 +59,21 @@ const Filter = () => {
     newList.forEach((filter) => {
       switch (filter.comparisonFilter) {
       case 'maior que': {
-        console.log('maior que chamado');
         reFiltered = reFiltered
           .filter((planet) => Number(planet[filter.columnFilter]) > Number(filter
             .valueFilter));
         break;
       }
       case 'menor que': {
-        console.log('menor que chamado');
         reFiltered = reFiltered
           .filter((planet) => Number(planet[filter.columnFilter]) < Number(filter
             .valueFilter));
         break;
       }
-      case 'igual a': {
-        console.log('igual a chamado');
+      default:
         reFiltered = reFiltered
           .filter((planet) => Number(planet[filter.columnFilter]) === Number(filter
             .valueFilter));
-        break;
-      }
-      default:
         break;
       }
     });
@@ -175,7 +169,7 @@ const Filter = () => {
       </button>
       {filterList.map((filter, index) => (
         <div
-          data-testid="filtered"
+          data-testid="filter"
           key={ index }
         >
           <p name={ filter.columnFilter }>{filter.columnFilter}</p>
