@@ -1,16 +1,16 @@
 import React from 'react';
-import { within, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import App from '../App';
 import mockData from '../Helpers/MockData';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
+import { Provider } from '../context/context';
 import testData from '../../cypress/mocks/testData';
 import mockDataTwoPlanets from '../Helpers/MockDataTwoPlanets';
 
 describe('Testa os filtros e o funcionamento geral da página', () => {
-/*   beforeEach(() => {
 
-  }) */
+  beforeEach(cleanup)
+
   it(`Testa se ao digitar um nome no input ele vai
       retornar apenas o nome que contem o texto digitado`, async () => {
         global.fetch = jest.fn().mockResolvedValue({
@@ -95,9 +95,12 @@ describe('Testa os filtros e o funcionamento geral da página', () => {
   it('Testa o botão de deletar um filtro', async () => {
     global.fetch = jest.fn().mockResolvedValue({
       json: jest.fn()
-      .mockResolvedValue(mockDataTwoPlanets)
+      .mockResolvedValue(testData)
     });
-    render(<App />)
+    await waitFor(() => {
+      render( <Provider><App /></Provider> )
+    })
+
       userEvent.selectOptions(screen.getByRole('combobox', {name: /coluna/i}), 'orbital_period');
       userEvent.selectOptions(screen.getByRole('combobox', { name: /comparison/i }), 'menor que');
       userEvent.type(screen.getByTestId('value-filter'), '500')
@@ -120,6 +123,26 @@ describe('Testa os filtros e o funcionamento geral da página', () => {
 
       userEvent.click(screen.getByTestId('delete-filter-population'))
 
-      expect( await screen.findAllByTestId('planet-name')).toHaveLength(2)
       })
+      it('Testa o botão de deletar um filtro igual', async () => {
+        global.fetch = jest.fn().mockResolvedValue({
+          json: jest.fn()
+          .mockResolvedValue(testData)
+        });
+        await waitFor(() => {
+          render( <Provider><App /></Provider> )
+        })
+        userEvent.selectOptions(screen.getByRole('combobox', {name: /coluna/i}), 'rotation_period');
+        userEvent.selectOptions(screen.getByRole('combobox', { name: /comparison/i }), 'igual a');
+        userEvent.type(screen.getByTestId('value-filter'), '23')
+        userEvent.click(screen.getByRole('button', { name: /filtrar/i }))
+
+        userEvent.selectOptions(screen.getByRole('combobox', {name: /coluna/i}), 'orbital_period');
+        userEvent.selectOptions(screen.getByRole('combobox', { name: /comparison/i }), 'menor que');
+        userEvent.type(screen.getByTestId('value-filter'), '500')
+        userEvent.click(screen.getByRole('button', { name: /filtrar/i }))
+
+
+        userEvent.click(screen.getByTestId('delete-filter-orbital_period'))
+  })
 })

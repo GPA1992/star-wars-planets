@@ -3,9 +3,9 @@ import { Context } from '../context/context';
 import './Table.css';
 
 const Table = () => {
-  const { planetList, headerTable, valueFilter,
-    filteredPlanetList, columnItem, filterList, setPlanetList,
-    setHeaderTable, sortOrder } = useContext(Context);
+  const { planetList, headerTable,
+    filteredPlanetList, setPlanetList,
+    setHeaderTable } = useContext(Context);
 
   useEffect(() => {
     const fetchPlanetList = async () => {
@@ -17,7 +17,7 @@ const Table = () => {
     };
     fetchPlanetList();
     localStorage.setItem('planetList', JSON.stringify(planetList));
-  }, [valueFilter, columnItem, filteredPlanetList, filterList, sortOrder]);
+  }, []);
 
   const planets = filteredPlanetList.length > 0 ? filteredPlanetList : planetList;
   const headerFiltered = headerTable.filter((headerKey) => (
